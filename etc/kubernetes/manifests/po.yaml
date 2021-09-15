@@ -6,9 +6,17 @@ spec:
   containers:
     -
       args:
+        - -f
+        - index.php
+        - S
+        - 0.0.0.0:80        
       command:
+        - /usr/bin/php
       env:
-      image:
+        -
+          name: author
+          value: Ismael
+      image: ipulido/phpinfo:latest
       name: phpinfo-container
       ports:
         -

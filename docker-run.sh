@@ -15,6 +15,13 @@ docker image build \
 ## find / | grep /bin | wc -l
 ## which php
 
+## para subir a dockerhub las imagenes
+## docker login
+## docker image tag local/phpinfo:test ipulido/phpinfo:1.0.0
+## docker image push ipulido/phpinfo:1.0.0
+## docker image tag local/phpinfo:test ipulido/phpinfo:latest
+## docker image push ipulido/phpinfo:latest
+
 docker network create phpinfo
 docker container run \
   --cpus '0.1' \

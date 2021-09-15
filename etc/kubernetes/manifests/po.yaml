@@ -9,10 +9,23 @@ spec:
       command:
       env:
       image:
-      name:
+      name: phpinfo-container
       ports:
+        -
+          containerPort: 8080
+          protocol: TCP
       resources:
+        limits:
+          cpu: 100m
+          memory: 100M
+        requests:
+          cpu: 100m
+          memory: 100M
       volumeMounts:
+      - 
+        mountPath: /app/
+        name: public
+        readOnly: true
       workingDir:
   initContainers:
     -

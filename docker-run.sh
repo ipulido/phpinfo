@@ -10,7 +10,8 @@ docker image build \
 --tag local/phpinfo:test \
 ./
 
-## $ docker container run --entrypoint /bin/sh --interactive --rm --tty local/phpinfo:test
+## comprabar que la imagen se ha construido bien
+## docker container run --entrypoint /bin/sh --interactive --rm --tty local/phpinfo:test
 ## find / | grep /bin | wc -l
 ## which php
 
@@ -28,9 +29,16 @@ docker container run \
   --read-only \
   --restart always \
   --user nobody \
-  --volume ./src/:src/:ro \
+  --volume ${PWD}/src/index.php:/app/index.php:ro \
   --workdir /app/ \
   local/phpinfo:test \
   -f /src/index.php \
   -S 0.0.0.0:8080 \
-  
+
+## comprobar que se ha creado bien
+## docker container ls 
+## docker container ls --no-trunc
+## docker container top phpinfo
+## docker container stats phpinfo --no-stream
+## docker container logs phpinfo
+## docker container logs phpinfo --follow

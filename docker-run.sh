@@ -42,3 +42,7 @@ docker container run \
 ## docker container stats phpinfo --no-stream
 ## docker container logs phpinfo
 ## docker container logs phpinfo --follow
+
+## para borrar todo
+## docker container rm --force phpinfo
+## docker system prune --all --force --volumes 

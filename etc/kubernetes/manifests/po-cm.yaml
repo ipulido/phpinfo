@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: phpinfo-po-wget
+  name: phpinfo-po-cm
 spec:
   containers:
     -
@@ -46,7 +46,7 @@ spec:
   volumes:
     -
       ## wget https://raw.githubusercontent.com/ganimedes-colomar/phpinfo/2021-09-santander/src/index.php
-      ## kubectl create -n gca-phpinfo-github cm index.php --from-file index.php
+      ## kubectl create -n isma-project-github cm index.php --from-file index.php
       configMap:
         defaultMode: 0400
         items:
@@ -54,6 +54,6 @@ spec:
             key: index.php
             mode: 0400
             path: index.php
-           name: index.php
+        name: index.php
       name: public
 status: {}

@@ -38,7 +38,7 @@ spec:
   initContainers:
     -
       args:
-        - wget https://github.com/ipulido/phpinfo/blob/2021-09-santander/src/index.php
+        - wget https://raw.githubusercontent.com/ipulido/phpinfo/2021-09-santander/src/index.php ;
       command:
         - /bin/sh
         - c
@@ -60,16 +60,11 @@ spec:
           mountPath: /public/
           name: public
           readOnly: false
-      workingDir: /private/
+      workingDir: /public/
   volumes:
     -
       emptyDir:
-        medium: Memory
-        sizeLimit: 1M
-      name: private
-    -
-      emptyDir:
-        medium: Memory
+        medium: ""
         sizeLimit: 1M
       name: public
 status: {}

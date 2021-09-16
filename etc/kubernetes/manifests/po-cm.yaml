@@ -45,6 +45,7 @@ spec:
       workingDir: /app/
   volumes:
     -
+      ## oc create cm index.php --from-file index.php
       configMap:
         defaultMode: 0400
         items:

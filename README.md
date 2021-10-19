@@ -16,3 +16,9 @@ Instrucciones para construir la imagen docker
 git checkout santander
 docker build --file Dockerfile --tag ipulido/phpinfo:santander .
 ```
+Instrucciones para construir la imagen docker optimizada
+```
+git pull
+docker build --file Dockerfile-optimizado --tag ipulido/phpinfo:santander .
+docker push ipulido/phpinfo:santander
+```

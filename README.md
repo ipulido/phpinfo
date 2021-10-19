@@ -22,3 +22,7 @@ git pull
 docker build --file Dockerfile-optimizado --tag ipulido/phpinfo:santander .
 docker push ipulido/phpinfo:santander
 ```
+# Instrucciones para ejecutar el contenedor
+```
+docker run -d --entrypoint /usr/bin/php --name phpinfo -p 8080:8080 --restart always -v ${PWD}/srv/index.php:/pepito.php:ro ipulido/phpinfo:santander -f src/index.php -S 0.0.0.0:8080
+```

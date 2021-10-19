@@ -17,7 +17,7 @@ services:
     deploy:
       placement:
         constraints:
-          -node.role == worker
+          - node.role == worker
     entrypoint: /usr/bin/php
     image: ipulido/phpinfo:santander
     ports: 

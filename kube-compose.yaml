@@ -46,5 +46,3 @@ spec:
         name: phpinfo-cm
         #kubectl create cm --from-file ./src/index.php phpinfo-cm
       name: phpinfo-volume
-      
-

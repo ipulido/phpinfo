@@ -33,7 +33,7 @@ spec:
           mountPath: /src/index.php
           name: phpinfo-volume
           readOnly: true
-          subPath: /src/index.php
+          subPath: index.php
   volumes:
     - 
       configMap:

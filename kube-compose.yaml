@@ -1,48 +1,49 @@
 apiVersion: v1
 kind: Pod
-metadata:
+metadata: 
   name: phpinfo-po
-  label: 
+  labels: 
     app: phpinfo
     branch: santander
-spec:
-  containers: 
-    -
-      args:
-        - -f
+spec: 
+  containers:
+    - 
+      args: 
+        - -f 
         - src/index.php
         - -S 
         - 0.0.0.0:8080
       command:
         - /usr/bin/php
-      env:
+      env: 
         - 
           name: author
           value: IsmaelPulido
-        -
+        - 
           name: JAVA_HOME
           value: /var/lib/java
       image: ipulido/phpinfo:santander
       name: phpinfo-container
-      ports:
-        -
+      ports: 
+        -  
           containerPort: 8080
           protocol: TCP
-      volumeMounts:
-        -
+      volumeMounts: 
+        - 
           mountPath: /src/index.php
           name: phpinfo-volume
           readOnly: true
           subPath: index.php
-  volumes:
+  volumes: 
     - 
-      configMap:
+      configMap: 
         defaultMode: 0400
-        items:
+        items: 
           - 
             key: index.php
             mode: 0400
             path: index.php
         name: phpinfo-cm
-        #kubectl create cm --from-file ./src/index.php phpinfo-cm
-      name: phpinfo-volume
+        # kubectl create cm --from-file ./src/index.php phpinfo-cm
+      name: phpinfo-volume            
+      

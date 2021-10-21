@@ -36,3 +36,16 @@ Instrucciones para desplegar la aplicación en swarm
 ```
 docker stack deploy -c docker-compose.yaml phpinfo
 ```
+Instrucciones en OCP playground
+```
+git clone https://github.com/ipulido/phpinfo
+cd phpinfo
+git checkout santander
+oc login -u developer -p developer
+oc new-project phpinfo
+kubectl apply -f phpinfo-rc.yaml -n phpinfo
+kubectl create cm --from-file ./src/index.php phpinfo-cm
+kubectl apply -f phpinfo-svc.yaml -n phpinfo
+git checkout santander-optimizado
+kubectl apply -f phpinfo-rc.yaml -n phpinfo
+```

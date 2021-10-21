@@ -1,1 +1,27 @@
-
+name: CI
+on:
+  push:
+    branches:
+      - santander
+jobs:
+  docker:
+    runs-on: ubuntu-18.04
+    steps: 
+      -
+        name: checkout
+        uses: actions/checkout@v2
+      -
+        name: uuid
+        run: uuid=$(uuid)
+      -
+        name: build
+        run: docker build --file Dockerfile --tag phpinfo:$(uuid) .
+      -
+        name: run
+        run: docker run -d --entrypoint /usr/bin/php --name phpinfo -p 80:8000 -v ${PWD}/srv/index.php:/srv/index.php:ro phpinfo:$(uuid) -f src/index.php -S 0.0.0.0:8080
+      -
+        name: test
+        run: while true; do sleep 10; curl localhost/srv/index.php | grep phpinfo &&break; done
+  #swarm:
+  #kubernetes:
+  #openshift:

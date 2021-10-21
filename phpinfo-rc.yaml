@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: ReplicationController
-metadata:
+metadata: 
   name: phpinfo-rc
 spec:
   replicas: 2
-  selector:
+  selector: 
     app: phpinfo
     branch: santander
-  template: 
+  template:
     metadata: 
-    labels: 
-      app: phpinfo
-      branch: santander
+      labels: 
+        app: phpinfo
+        branch: santander
     spec: 
       containers:
         - 

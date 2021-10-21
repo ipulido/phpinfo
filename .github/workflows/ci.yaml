@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v2
       -
         name: uuid
-        run: uuid=$(uuid)
+        run: uuid=$(RANDOM)
       -
         name: build
         run: docker build --file Dockerfile --tag phpinfo:$(uuid) .

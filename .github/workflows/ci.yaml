@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - santander
+env:
+  uuid: 77720140
 jobs:
   docker:
     runs-on: ubuntu-18.04
@@ -10,9 +12,6 @@ jobs:
       -
         name: checkout
         uses: actions/checkout@v2
-      -
-        name: uuid
-        run: export uuid=$( echo ${RANDOM} )
       -
         name: build
         run: docker build --file Dockerfile --tag phpinfo:${uuid} .

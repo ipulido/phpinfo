@@ -1,0 +1,15 @@
+apiVersion: core/v1
+kind: Service
+metadata:
+  name: phpinfo-svc
+spec: 
+  clusterIP: ''
+  ports:
+    -
+      port: 80
+      protocolo: TCP
+      targetPort: 8080
+  selector:
+    app: phpinfo
+    branch: santander
+  type: ClusterIP

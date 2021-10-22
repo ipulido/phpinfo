@@ -47,6 +47,6 @@ jobs:
         run: ifconfig
       -
         name: test
-        run: while true; do sleep 10; curl localhost/src/index.php | grep phpinfo && break; done
+        run: while true; do sleep 10; curl $( ifconfig | grep eth0 -A 1 | awk /inet/'{ print $2 }' )/src/index.php | grep phpinfo && break; done
   #kubernetes:
   #openshift:

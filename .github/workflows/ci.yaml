@@ -4,7 +4,7 @@ on:
     branches:
       - santander
 env:
-  uuid: 772238
+  uuid: 7722381021
 jobs:
   docker:
     runs-on: ubuntu-18.04
@@ -51,5 +51,30 @@ jobs:
       -
         name: test
         run: while true; do sleep 10; curl $( ifconfig | grep eth0 -A 1 | awk /inet/'{ print $2 }' )/src/index.php | grep phpinfo && break; done
-  #kubernetes:
+  kubernetes:
+    runs-on: ubuntu-18.04
+    steps:
+      -
+        name: checkout
+        uses: actions/checkout@v2
+      -
+        name: build
+        run: docker build --file Dockerfile --tag phpinfo:${uuid} .
+      -
+        name: kubernetes
+        run: |
+          git clone --single-branch -b v1.2 https://github.com/academiaonline/kubernetes ${uuid}
+          source ${uuid}/bin/cluster/ubuntu18/install-docker-kubelet.sh
+          source ${uuid}/bin/cluster/ubuntu18/install-leader.sh
+          master=$( kubectl get node | awk /master/'{ print $1 }' )
+          kubectl taint node $master node-role.kubernetes.io/master:NoSchedule-
+      - 
+        name: image
+        run: sed -i /image:.*phpinfo/s/image:.*$/image:' 'phpinfo:${uuid}/ kube-compose.yaml
+      -
+        name: deploy
+        run: kubectl apply -f kube-compose.yaml
+      -
+        name: test
+        run: while true; do sleep 10; curl $( ifconfig | grep eth0 -A 1 | awk /inet/'{ print $2 }' )/src/index.php | grep phpinfo && break; done
   #openshift:

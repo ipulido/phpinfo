@@ -1,14 +1,14 @@
 name: CI
-on:
+on: 
   push:
     branches:
       - santander
 env:
-  uuid: 77720140
+  uuid: 772238
 jobs:
   docker:
     runs-on: ubuntu-18.04
-    steps: 
+    steps:
       -
         name: checkout
         uses: actions/checkout@v2
@@ -17,13 +17,13 @@ jobs:
         run: docker build --file Dockerfile --tag phpinfo:${uuid} .
       -
         name: run
-        run: docker run -d --entrypoint /usr/bin/php --name phpinfo -p 80:8000 -v ${PWD}/srv/index.php:/srv/index.php:ro phpinfo:${uuid} -f src/index.php -S 0.0.0.0:8080
+        run: docker run -d --entrypoint /usr/bin/php --name phpinfo -p 80:8080 -v ${PWD}/src/index.php:/src/index.php:ro phpinfo:${uuid} -f src/index.php -S 0.0.0.0:8080
       -
         name: test
-        run: while true; do sleep 10; curl localhost/srv/index.php | grep phpinfo &&break; done
+        run: while true; do sleep 10; curl localhost/src/index.php | grep phpinfo && break; done
   swarm:
     runs-on: ubuntu-18.04
-    steps: 
+    steps:
       -
         name: checkout
         uses: actions/checkout@v2
@@ -35,7 +35,7 @@ jobs:
         run: docker swarm init
       -
         name: compose
-        run: sed -i /node.role/s/worker/manager/docker-compose.yaml
+        run: sed -i /node.role/s/worker/manager/ docker-compose.yaml
       -
         name: nodeport
         run: sed -i /8080:8080/s/8080/80/ docker-compose.yaml
@@ -47,6 +47,6 @@ jobs:
         run: ifconfig
       -
         name: test
-        run: while true; do sleep 10; curl localhost/srv/index.php | grep phpinfo &&break; done
+        run: while true; do sleep 10; curl localhost/src/index.php | grep phpinfo && break; done
   #kubernetes:
   #openshift:

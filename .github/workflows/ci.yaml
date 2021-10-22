@@ -68,13 +68,16 @@ jobs:
           source ${uuid}/bin/cluster/ubuntu18/install-leader.sh
           master=$( kubectl get node | awk /master/'{ print $1 }' )
           kubectl taint node $master node-role.kubernetes.io/master:NoSchedule-
-      - 
+      -
         name: image
         run: sed -i /image:.*phpinfo/s/image:.*$/image:' 'phpinfo:${uuid}/ kube-compose.yaml
+      -
+        name: cm
+        run: kubectl create cm --from-file ./src/index.php phpinfo-cm
       -
         name: deploy
         run: kubectl apply -f kube-compose.yaml
       -
         name: test
-        run: while true; do sleep 10; curl $( ifconfig | grep eth0 -A 1 | awk /inet/'{ print $2 }' )/src/index.php | grep phpinfo && break; done
+        run: while true; do sleep 10; kubectl logs svc/phpinfo-svc | grep PHP && break; done
   #openshift:

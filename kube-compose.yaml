@@ -1,1 +1,71 @@
-
+apiVersion: v1
+kind: ReplicationController
+metadata: 
+  name: phpinfo-rc
+spec:
+  replicas: 2
+  selector: 
+    app: phpinfo
+    branch: santander
+  template:
+    metadata: 
+      labels: 
+        app: phpinfo
+        branch: santander
+    spec: 
+      containers:
+        - 
+          args: 
+            - -f 
+            - src/index.php
+            - -S 
+            - 0.0.0.0:8080
+          command:
+            - /usr/bin/php
+          env: 
+            - 
+              name: author
+              value: Sergio
+            - 
+              name: JAVA_HOME
+              value: /var/lib/java
+          image: ipulido/phpinfo:santander
+          name: phpinfo-container
+          ports: 
+            -  
+              containerPort: 8080
+              protocol: TCP
+          volumeMounts: 
+            - 
+              mountPath: /src/index.php
+              name: phpinfo-volume
+              readOnly: true
+              subPath: index.php
+      volumes: 
+        - 
+          configMap: 
+            defaultMode: 0400
+            items: 
+              - 
+                key: index.php
+                mode: 0400
+                path: index.php
+            name: phpinfo-cm
+            # kubectl create cm --from-file ./src/index.php phpinfo-cm
+          name: phpinfo-volume
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: phpinfo-svc
+spec:
+  clusterIP: ''
+  ports: 
+    - 
+      port: 80
+      protocol: TCP 
+      targetPort: 8080
+  selector:
+    app: phpinfo
+    branch: santander
+  type: ClusterIP
